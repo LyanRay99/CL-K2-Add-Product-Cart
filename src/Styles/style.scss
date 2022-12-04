@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+section {
+  @include size(1000px, auto);
+  padding: 20px;
+  // margin: auto;
+
+  // .gioHang {
+  //   @include size(150px, auto);
+  //   padding: 10px;
+  //   margin: 0px 0px 10px 0px;
+  //   background-color: orange;
+  //   color: white;
+  //   text-align: center;
+  //   font-weight: bold;
+  //   font-size: 1.2em;
+  //   border-radius: 45%;
+  //   cursor: pointer;
+  // }
+
+  .product {
+    @include size(100%, auto);
+    border-radius: 20px;
+    border: 2px solid orange;
+    padding: 20px;
+    margin: 20px 0px;
+    display: flex;
+    justify-content: space-around;
+
+    &__box {
+      @include size(30%, 300px);
+
+      &__image {
+        @include size(100%, 60%);
+        // background-color: aqua;
+
+        img {
+          @include size(100%, 100%);
+          object-fit: scale-down;
+        }
+      }
+
+      &__info {
+        text-align: center;
+        line-height: 1.5;
+        margin: 10px;
+      }
+
+      &__btn {
+        padding: 0px 40px;
+        display: flex;
+        justify-content: space-around;
+
+        button {
+          border: none;
+          padding: 5px;
+          font-weight: bold;
+          color: orange;
+          background-color: black;
+          border-radius: 5px;
+          cursor: pointer;
+
+          &:hover {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+
+  .infoPhone {
+    @include size(100%, auto);
+    display: flex;
+    justify-content: space-around;
+
+    &__demo {
+      @include size(50%, auto);
+
+      &__title {
+        text-align: center;
+        margin: 10px;
+      }
+
+      &__image {
+        @include size(100%, auto);
+
+        img {
+          @include size(100%, auto);
+        }
+      }
+    }
+
+    &__info {
+      @include size(50%, auto);
+      table {
+        @include size(80%, auto);
+        line-height: 2;
+      }
+    }
+  }
+}
+
+.box {
+  @include size(100%, 100px);
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 10px 0px;
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+
+  &__image {
+    @include size(30%, 100%);
+
+    img {
+      @include size(100%, 100%);
+      object-fit: contain;
+    }
+  }
+
+  &__info {
+    @include size(30%, 100%);
+  }
+
+  &__amount {
+    @extend .box__info;
+  }
+}
