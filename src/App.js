@@ -36,17 +36,65 @@ export default class App extends React.Component {
 
   // * Function add product into cart
   addCart = (item) => {
-    this.setState(
-      this.state.productCart = [
-        ...this.state.productCart, item
-      ]
-    )
+    //* Tạo Object product chứa các thuộc tính cần thiết để hiển thị trong giỏ hàng
+    let productAdded = {
+      maSP: item.maSP,
+      tenSP: item.tenSP,
+      hinhAnh: item.hinhAnh,
+      giaBan: item.giaBan,
+      soLuong: 1,
+    }
+
+    //* Tìm xem mã hàng đã có trong array productCart chưa (tìm theo têh với method findIndex)
+    //* Nếu chưa có thì index trả về -1, lúc này ta sẽ push nó vào array productCart
+    //* Nếu có rồi thì ta set state lại số lượng của mã hàng đó
+    let checkProduct = this.state.productCart.findIndex((item) => item.tenSP === productAdded.tenSP)
+    if (checkProduct === -1) {
+      //* Push nó vào productCart đã tạo sẵn ở trên
+      this.state.productCart.push(productAdded)
+    }
+    else {
+      this.state.productCart[checkProduct].soLuong += 1
+    }
+
+    this.setState({
+      productCart: this.state.productCart
+    })
+  }
+
+  // * Function delete product into cart
+  deleteCart = (deleteItem) => {
+    //* Check xem có tên sp trong array productCart ko
+    //* Nếu ta thì ta dùng method Splice để xóa object đó khỏi array productCart
+    //* Sau đó, set state lại productCart
+    let checkProduct = this.state.productCart.findIndex((item) => item.tenSP === deleteItem.tenSP)
+    if (checkProduct !== -1) {
+      this.state.productCart.splice(deleteItem, 1)
+    }
+
+    this.setState({
+      productCart: this.state.productCart
+    })
+  }
+
+  // * Function hiển thị số lượng product into cart
+  showAmount = (productCart) => {
+    let amount = 0
+
+    productCart.forEach((value) => {
+      amount += value.soLuong
+    });
+
+    return amount;
   }
 
   render() {
     return (
       <section>
-        <ModalCart productCart={this.state.productCart} />
+        <ModalCart
+          productCart={this.state.productCart}
+          deleteCart={this.deleteCart}
+          showAmount={this.showAmount} />
 
         <Product
           product={DataProduct}
@@ -92,7 +140,7 @@ export default class App extends React.Component {
             </table>
           </div>
         </div>
-      </section >
+      </section>
     )
   }
 }

@@ -120,7 +120,7 @@ section {
   align-content: center;
 
   &__image {
-    @include size(30%, 100%);
+    @include size(20%, 100%);
 
     img {
       @include size(100%, 100%);
@@ -129,10 +129,41 @@ section {
   }
 
   &__info {
-    @include size(30%, 100%);
+    @include size(60%, 100%);
+
+    p {
+      margin: 0px;
+    }
   }
 
   &__amount {
-    @extend .box__info;
+    @include size(30%, 100%);
+    display: flex;
+    flex-wrap: wrap;
+
+    &__incrDecr {
+      @include size(100%, auto);
+      display: flex;
+
+      .icon {
+        padding: 2px;
+        color: orange;
+        border: 1px solid orange;
+        border-radius: 5px;
+
+        &:hover {
+          font-weight: bold;
+        }
+      }
+    }
+
+    &__trash {
+      @include size(100%, auto);
+      color: orange;
+
+      &:hover {
+        font-weight: bold;
+      }
+    }
   }
 }

@@ -14,7 +14,7 @@ export default class Product extends React.Component {
 
                             <div className='product__box__info'>
                                 <p>{item.tenSP}</p>
-                                <p>{item.giaBan}</p>
+                                <p>{item.giaBan.toLocaleString()}</p>
                             </div>
 
                             <div className='product__box__btn'>

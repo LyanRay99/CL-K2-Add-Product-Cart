@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faPlus, faSubtract, faTrash } from '@fortawesome/free-solid-svg-icons';
 import '../Styles/style.scss'
 
 export const ModalCart = (props) => {
     const [show, setShow] = useState(false);
+    const [productCartModal, setProductCartModal] = useState([])
+
+    useEffect(() => {
+        setProductCartModal(props.productCart)
+    })
+
+    const increaseAmount = (item, index) => {
+        let incrAmount = item.soLuong + 1
+        setProductCartModal(
+            productCartModal[index].soLuong = incrAmount
+        )
+    }
+
+    const decreaseAmount = (item, index) => {
+        let incrAmount = item.soLuong - 1
+        if (incrAmount >= 0) {
+            setProductCartModal(
+                productCartModal[index].soLuong = incrAmount
+            )
+        }
+    }
 
     return (
         <>
@@ -24,7 +45,8 @@ export const ModalCart = (props) => {
 
             <Button variant="primary" onClick={() => setShow(true)}>
                 <FontAwesomeIcon className='icon' icon={faCartShopping} />
-                (0)
+                <span> </span>
+                {props.showAmount(props.productCart)}
             </Button>
 
             <Modal
@@ -50,12 +72,35 @@ export const ModalCart = (props) => {
                                     </div>
 
                                     <div className='box__info'>
-                                        <p>{item.tenSP}</p>
-                                        <p>{item.giaBan}</p>
+                                        <p>Name Product: {item.tenSP}</p>
+                                        <p>Price: {item.giaBan.toLocaleString()}</p>
+                                        <p>Totals: {(item.giaBan * item.soLuong).toLocaleString()}</p>
                                     </div>
 
                                     <div className='box__amount'>
-                                        <p>Amount: 1</p>
+                                        <div className='box__amount__incrDecr'>
+                                            <span>
+                                                <FontAwesomeIcon
+                                                    icon={faPlus}
+                                                    className='icon'
+                                                    onClick={() => increaseAmount(item, index)} />
+                                            </span>
+
+                                            <p>Amount: {item.soLuong}</p>
+
+                                            <span>
+                                                <FontAwesomeIcon
+                                                    icon={faSubtract}
+                                                    className='icon'
+                                                    onClick={() => decreaseAmount(item, index)} />
+                                            </span>
+                                        </div>
+
+                                        <div
+                                            className='box__amount__trash'
+                                            onClick={() => props.deleteCart(item)}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </div>
                                     </div>
                                 </div>
                             ))
